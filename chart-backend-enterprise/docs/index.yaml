@@ -3,12 +3,12 @@ entries:
   chart-backend-enterprise:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-07-04T11:20:31.544065479-05:00"
+    created: "2025-07-04T12:27:40.37976106-05:00"
     description: A Helm chart for Kubernetes
     digest: 9d3271ff0bed97955ca2614a73051d9469ecb651a9ff353ddc4897c69f4c6ec0
     name: chart-backend-enterprise
     type: application
     urls:
-    - http://git.mct.com.co/tics/charts-helm/chart-backend-enterprise/-/raw/master/chart-backend-enterprise-1.0.0.tgz
+    - https://mct-desarrollo.github.io/helm-charts/chart-backend-enterprise-1.0.0.tgz
     version: 1.0.0
-generated: "2025-07-04T11:20:31.543530427-05:00"
+generated: "2025-07-04T12:27:40.379032578-05:00"
