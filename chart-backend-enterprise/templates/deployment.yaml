@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: {{ if eq .Values.ingress.path "/" }}"/actuator/prometheus"{{ else }}"{{ .Values.ingress.path }}/actuator/prometheus"{{ end }}
+    prometheus.io/port: {{ .Values.containers.port | quote }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      {{- if .Values.hostAliases }}
+      hostAliases:
+        {{- range .Values.hostAliases }}
+        - ip: {{ .ip | quote }}
+          hostnames:
+            {{- range .hostnames }}
+            - {{ . | quote }}
+            {{- end }}
+        {{- end }}
+      {{- end }}
+      imagePullSecrets:
+        - name: login-docker-secret
+      containers:
+        - name: {{ .Release.Name }}-app
+          image: {{ .Values.containers.image }}:{{ .Values.containers.tag }}
+          env:
+            - name: TZ
+              value: "America/Bogota"
+          ports:
+              - containerPort: {{ .Values.containers.port }}
+          resources:
+            requests:
+              memory: {{ .Values.containers.resources.requests.memory }}
+              cpu: {{ .Values.containers.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.containers.resources.limits.memory }}
+              cpu: {{ .Values.containers.resources.limits.cpu }}
+          livenessProbe:
+            httpGet:
+              path: {{ if eq .Values.ingress.path "/" }}"/actuator/health"{{ else }}"{{ .Values.ingress.path }}/actuator/health"{{ end }}
+              port: {{ .Values.containers.port }}
+            initialDelaySeconds: {{ .Values.containers.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.containers.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.containers.livenessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.containers.livenessProbe.failureThreshold }}
+
+          readinessProbe:
+            httpGet:
+              path: {{ if eq .Values.ingress.path "/" }}"/actuator/health"{{ else }}"{{ .Values.ingress.path }}/actuator/health"{{ end }}
+              port: {{ .Values.containers.port }}
+            initialDelaySeconds: {{ .Values.containers.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.containers.readinessProbe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.containers.readinessProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.containers.readinessProbe.failureThreshold }}

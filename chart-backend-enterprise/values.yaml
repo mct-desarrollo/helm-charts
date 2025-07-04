@@ -1,0 +1,48 @@
+replicaCount: 1
+
+containers:
+  image: harbor-des.mct.com.co/back-end/erp_factura_empresariales
+  tag: 0.0.2
+  port: 8081
+  resources:
+    requests:         # Son los recursos mínimos que el contenedor necesita para funcionar.
+      memory: "512Mi" # "512Mi": El contenedor solicita 512 MiB de memoria RAM como mínimo
+      cpu: "200m"     # "500m" El contenedor solicita 500 milicores de CPU (equivalente a la mitad de un núcleo).
+
+    limits:           # Son los recursos máximos que el contenedor puede consumir.
+      memory: "1Gi"   # El contenedor puede usar hasta 1 GiB de memoria RAM como máximo.
+      cpu: "1"        # El contenedor puede usar hasta un núcleo completo de CPU como máximo
+
+  readinessProbe: # Comprobación de PREPARACIÓN
+    # Determina si un contenedor está LISTO para recibir tráfico
+    # Ejemplo: Verifica que la base de datos esté conectada o que los servicios estén funcionando
+    # Si falla, Kubernetes RETIRA el contenedor del servicio de balanceo de carga
+    initialDelaySeconds: 30  # Tiempo de espera inicial antes de empezar las comprobaciones
+    periodSeconds: 10        # Frecuencia de las comprobaciones
+    timeoutSeconds: 5        # Tiempo máximo de respuesta
+    failureThreshold: 3      # Número de fallos antes de marcar como "no preparado"
+
+  livenessProbe: # Comprobación de VIDA
+    # Determina si un contenedor está VIVO y funcionando correctamente
+    # Ejemplo: Detecta si la aplicación está bloqueada o en estado de error irrecuperable
+    # Si falla, Kubernetes REINICIA automáticamente el contenedor
+    initialDelaySeconds: 30  # Tiempo de espera inicial antes de empezar las comprobaciones
+    periodSeconds: 10        # Frecuencia de las comprobaciones
+    timeoutSeconds: 5        # Tiempo máximo de respuesta
+    failureThreshold: 3      # Número de fallos antes de reiniciar el contenedor
+
+hpa:
+  metrics:
+    cpu:
+      averageUtilization: 20
+    memory:
+      averageUtilization: 80
+  minReplicas: 1
+  maxReplicas: 1
+
+ingress:
+  host: backend.mct.com.co
+  path: /
+
+certs:
+  name: server-tls-secret
