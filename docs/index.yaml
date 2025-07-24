@@ -3,7 +3,7 @@ entries:
   chart-backend-enterprise:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-07-24T11:34:45.495380434-05:00"
+    created: "2025-07-24T11:40:36.068173354-05:00"
     description: A Helm chart for Kubernetes
     digest: 9d3271ff0bed97955ca2614a73051d9469ecb651a9ff353ddc4897c69f4c6ec0
     name: chart-backend-enterprise
@@ -14,12 +14,12 @@ entries:
   chart-backend-enterprise-aws:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-07-24T11:34:45.495766632-05:00"
+    created: "2025-07-24T11:40:36.068626467-05:00"
     description: A Helm chart for Kubernetes in AWS
-    digest: f173646466eaf7a0d8f075e03fd6a9fedb082a4ddcc78a8f60c71387f4421621
+    digest: 50fcedc9f9b05f4fd7b916d059c4fe1a82a88162edea5bb3e001113b4d6b792a
     name: chart-backend-enterprise-aws
     type: application
     urls:
     - https://mct-desarrollo.github.io/helm-charts/chart-backend-enterprise-aws-1.0.0.tgz
     version: 1.0.0
-generated: "2025-07-24T11:34:45.49473497-05:00"
+generated: "2025-07-24T11:40:36.067243797-05:00"
