@@ -1,0 +1,7 @@
+¡Instalación completada!
+
+**API:**
+URL: http://{{ .Values.ingress.host }}{{ .Values.ingress.path }}
+
+Para desinstalar:
+   helm uninstall {{ .Release.Name }} --namespace {{ .Release.Namespace }}

@@ -1,0 +1,15 @@
+apiVersion: v2
+name: chart-backend-enterprise-aws
+description: A Helm chart for Kubernetes in AWS
+# Visualizar el template
+# helm template . --values values.yaml
+
+# Generar el chart
+# helm package .
+
+# Subir el chart
+# curl -u admin:D3sa2024.% --upload-file chart-backend-enterprise-1.0.0.tgz https://nexus.mct.com.co/repository/mct-helm/
+
+type: application
+version: 1.0.0
+appVersion: "1.16.0"
