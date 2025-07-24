@@ -4,8 +4,7 @@ metadata:
   name: {{ .Release.Name }}-ingress
   namespace: {{ .Release.Namespace }}
   annotations:
-    alb.ingress.kubernetes.io/certificate-arn: >-
-    arn:aws:acm:us-east-1:440744239416:certificate/cd3e2dd5-df68-4a37-87e7-bea73f26e9f4
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:440744239416:certificate/cd3e2dd5-df68-4a37-87e7-bea73f26e9f4
     alb.ingress.kubernetes.io/group.name: publicalb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
